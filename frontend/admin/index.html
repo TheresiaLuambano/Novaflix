@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BurudaniKiganjani</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css">
+</head>
+<body class="admin-body">
+    <!-- Login Required Overlay -->
+    <div id="loginRequired" class="login-overlay" style="display: none;">
+        <div class="login-box">
+            <h2><i class="fas fa-user-shield"></i> Admin Access Required</h2>
+            <p>Please login as an admin to access the dashboard.</p>
+            <a href="../login.html" class="btn btn-primary">Login as Admin</a>
+            <a href="../index.html" class="btn btn-secondary">Go to Home</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Pro View Toggle -->
+    <div class="pro-toggle" id="proToggle">
+        <span class="pro-toggle-label">Pro View</span>
+        <div class="pro-toggle-switch" id="proToggleSwitch"></div>
+    </div>
+
+    <!-- Enhanced Admin Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="logo-container">
+                        <span class="logo-icon">▶</span>
+                        <div class="logo-text-container">
+                            <span class="logo-text">Burudani</span>
+                            <span class="logo-text-secondary">Kiganjani</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="admin-info">
+                    <span class="admin-badge">Admin Panel</span>
+                    <div class="admin-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="nav-list vertical">
+                <li class="nav-item active" data-page="dashboard">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <span class="nav-text">Dashboard</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="analytics">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span class="nav-text">Analytics</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="users">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span class="nav-text">Users</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="content">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <span class="nav-text">Content</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="subscriptions">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <span class="nav-text">Subscriptions</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <a href="#" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <span class="nav-text">Settings</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="../assets/images/default-avatar.png" alt="Admin" id="sidebarAvatar">
+                </div>
+                <div class="user-details">
+                    <div class="user-name" id="sidebarName">Admin</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+            </div>
+            <div class="sidebar-actions">
+                <button class="sidebar-action-btn" id="adminLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+    <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    <main class="admin-main">
+        <!-- Enhanced Admin Navbar -->
+        <header class="admin-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <div class="header-branding">
+                        <div class="brand-icon">
+                            <i class="fas fa-stream"></i>
+                        </div>
+                        <div class="brand-text">BurudaniKiganjani Admin</div>
+                    </div>
+                    <div class="breadcrumb">
+                        <span id="breadcrumbHome">Dashboard</span>
+                        <span class="breadcrumb-separator">/</span>
+                        <span id="breadcrumbCurrent" class="breadcrumb-current">Overview</span>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search users, content, analytics..." id="globalSearch">
+                        <div class="search-shortcuts">
+                            <span class="shortcut">Ctrl+K</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="header-action-btn" title="Quick Actions" onclick="adminProView.toggleQuickActions()">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                        <button class="notification-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count" id="notificationCount">3</span>
+                        </button>
+                        <div class="header-user" id="headerUser">
+                            <div class="user-avatar-container">
+                                <img src="../assets/images/default-avatar.png" alt="Admin" id="adminAvatar">
+                                <span class="online-indicator"></span>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name" id="adminName">Admin</span>
+                                <span class="user-role">Administrator</span>
+                            </div>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="admin-page active" id="page-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon users"><i class="fas fa-users"></i></div><div class="stat-info"><h3 class="stat-value" id="statUsers">0</h3><p class="stat-label">Total Users</p></div><div class="stat-trend up"><i class="fas fa-arrow-up"></i><span>12%</span></div>
+                <div class="stat-card"><div class="stat-icon content"><i class="fas fa-film"></i></div><div class="stat-info"><h3 class="stat-value" id="statContent">0</h3><p class="stat-label">Total Content</p></div><div class="stat-trend up"><i class="fas fa-arrow-up"></i><span>8%</span></div>
+                <div class="stat-card"><div class="stat-icon views"><i class="fas fa-eye"></i></div><div class="stat-info"><h3 class="stat-value" id="statViews">0</h3><p class="stat-label">Total Views</p></div><div class="stat-trend up"><i class="fas fa-arrow-up"></i><span>24%</span></div>
+                <div class="stat-card"><div class="stat-icon revenue"><i class="fas fa-dollar-sign"></i></div><div class="stat-info"><h3 class="stat-value" id="statRevenue">$0</h3><p class="stat-label">Revenue</p></div><div class="stat-trend up"><i class="fas fa-arrow-up"></i><span>18%</span></div>
+            </div>
+            <div class="charts-row">
+                <div class="chart-card"><div class="chart-header"><h3>Views Over Time</h3></div><div class="chart-body"><canvas id="viewsChart"></canvas></div>
+                <div class="chart-card"><div class="chart-header"><h3>Content Distribution</h3></div><div class="chart-body"><canvas id="contentChart"></canvas></div>
+            </div>
+        </section>
+        <section class="admin-page" id="page-users">
+            <div class="page-header">
+                <div class="page-actions">
+                    <button class="btn btn-primary" id="addUserBtn"><i class="fas fa-plus"></i> Add User</button>
+                    <button class="btn btn-secondary" id="exportUsersBtn"><i class="fas fa-download"></i> Export</button>
+                </div>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Search users..." id="userSearch"></div>
+                <select id="userStatus" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="banned">Banned</option>
+                </select>
+                <select id="userRole" class="filter-select">
+                    <option value="all">All Roles</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+            </div>
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="usersPagination"></div>
+        </section>
+        <section class="admin-page" id="page-content">
+            <div class="page-header">
+                <div class="page-actions">
+                    <button class="btn btn-primary" id="addContentBtn"><i class="fas fa-plus"></i> Add Content</button>
+                </div>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Search content..." id="contentSearch"></div>
+                <select id="contentType" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="movie">Movies</option>
+                    <option value="series">Series</option>
+                    <option value="documentary">Documentaries</option>
+                </select>
+                <select id="contentStatus" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Views</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="contentPagination"></div>
+        </section>
+        <section class="admin-page" id="page-analytics">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2 class="page-title">Analytics</h2>
+                </div>
+                <div class="page-header-right">
+                    <select id="analyticsPeriod" class="filter-select">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="adminProView.exportAnalytics()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>User Growth</h3>
+                        <div class="card-actions">
+                            <button class="btn-icon" onclick="adminProView.refreshAnalytics()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-body large">
+                        <canvas id="userGrowthChart"></canvas>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Views by Content Type</h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="contentTypeChart"></canvas>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Top Content</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Content</th>
+                                    <th>Views</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topContentTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Engagement Metrics</h3>
+                    </div>
+                    <div class="metrics-list" id="engagementMetrics">
+                        <div class="metric-item">
+                            <span class="metric-label">Avg. Watch Time</span>
+                            <span class="metric-value" id="avgWatchTime">0 min</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Completion Rate</span>
+                            <span class="metric-value" id="completionRate">0%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Daily Active Users</span>
+                            <span class="metric-value" id="dailyActiveUsers">0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Retention Rate</span>
+                            <span class="metric-value" id="retentionRate">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="admin-page" id="page-subscriptions">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2 class="page-title">Subscriptions</h2>
+                </div>
+                <div class="page-header-right">
+                    <button class="btn btn-primary" onclick="adminProView.showAddPlanModal()">
+                        <i class="fas fa-plus"></i> Add Plan
+                    </button>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon subscriptions"><i class="fas fa-credit-card"></i></div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="totalSubscriptions">0</h3>
+                        <p class="stat-label">Active Subscriptions</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon revenue"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="monthlyRevenue">$0</h3>
+                        <p class="stat-label">Monthly Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon conversions"><i class="fas fa-arrow-up"></i></div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="conversionRate">0%</h3>
+                        <p class="stat-label">Conversion Rate</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon churn"><i class="fas fa-arrow-down"></i></div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="churnRate">0%</h3>
+                        <p class="stat-label">Churn Rate</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-grid">
+                <div class="content-card plans-card">
+                    <div class="plan-header">
+                        <h3>Free</h3>
+                        <span class="plan-price">$0<span>/month</span></span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Access to free content</li>
+                        <li><i class="fas fa-check"></i> Basic quality streaming</li>
+                        <li><i class="fas fa-check"></i> Create watchlist</li>
+                    </ul>
+                    <div class="plan-stats">
+                        <span id="freePlanCount">0 users</span>
+                    </div>
+                </div>
+                <div class="content-card plans-card">
+                    <div class="plan-header">
+                        <h3>Premium</h3>
+                        <span class="plan-price">$9.99<span>/month</span></span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> All content access</li>
+                        <li><i class="fas fa-check"></i> 4K quality streaming</li>
+                        <li><i class="fas fa-check"></i> No ads</li>
+                        <li><i class="fas fa-check"></i> Offline viewing</li>
+                    </ul>
+                    <div class="plan-stats">
+                        <span id="premiumPlanCount">0 users</span>
+                    </div>
+                </div>
+                <div class="content-card plans-card">
+                    <div class="plan-header">
+                        <h3>Family</h3>
+                        <span class="plan-price">$14.99<span>/month</span></span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Everything in Premium</li>
+                        <li><i class="fas fa-check"></i> Up to 4 screens</li>
+                        <li><i class="fas fa-check"></i> Parental controls</li>
+                        <li><i class="fas fa-check"></i> Family sharing</li>
+                    </ul>
+                    <div class="plan-stats">
+                        <span id="familyPlanCount">0 users</span>
+                    </div>
+                </div>
+            </div>
+            <div class="page-section">
+                <h3 class="section-title">Recent Transactions</h3>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTable">
+                            <tr><td colspan="5" style="text-align: center; color: #999;">Loading transactions...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section class="admin-page" id="page-settings">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2 class="page-title">Settings</h2>
+                </div>
+            </div>
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3 class="settings-section-title">General Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label>Site Name</label>
+                            <input type="text" value="BurudaniKiganjani" id="siteName">
+                        </div>
+                        <div class="setting-item">
+                            <label>Support Email</label>
+                            <input type="email" value="support@burudanikiganjani.com" id="supportEmail">
+                        </div>
+                        <div class="setting-item">
+                            <label>Default Language</label>
+                            <select id="defaultLanguage">
+                                <option value="en" selected>English</option>
+                                <option value="sw">Swahili</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Timezone</label>
+                            <select id="timezone">
+                                <option value="Africa/Dar_es_Salaam" selected>Africa/Dar es Salaam (UTC+3)</option>
+                                <option value="UTC">UTC</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Content Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label>Max Upload Size (MB)</label>
+                            <input type="number" value="500" id="maxUploadSize">
+                        </div>
+                        <div class="setting-item">
+                            <label>Default Video Quality</label>
+                            <select id="defaultQuality">
+                                <option value="1080p" selected>1080p</option>
+                                <option value="720p">720p</option>
+                                <option value="480p">480p</option>
+                            </select>
+                        </div>
+                        <div class="setting-item toggle-setting">
+                            <label>Auto-approve Content</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="autoApproveContent">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item toggle-setting">
+                            <label>Enable Comments</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="enableComments" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3 class="settings-section-title">Security</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item toggle-setting">
+                            <label>Two-Factor Authentication</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="enable2FA">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item toggle-setting">
+                            <label>Email Verification Required</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="emailVerification" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>Session Timeout (minutes)</label>
+                            <input type="number" value="60" id="sessionTimeout">
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-actions">
+                    <button class="btn btn-secondary" onclick="adminProView.resetSettings()">Reset to Default</button>
+                    <button class="btn btn-primary" onclick="adminProView.saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Quick Actions Panel (Pro View) -->
+    <div class="quick-actions" id="quickActionsPanel">
+        <div class="quick-actions-header">
+            <h3 class="quick-actions-title">Quick Actions</h3>
+            <button class="quick-actions-toggle" id="quickActionsToggle">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.showAddUserModal()">
+            <i class="fas fa-user-plus"></i>
+            <span>Add User</span>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.showAddContentModal()">
+            <i class="fas fa-plus-circle"></i>
+            <span>Add Content</span>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.generateReport()">
+            <i class="fas fa-chart-bar"></i>
+            <span>Generate Report</span>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.exportData()">
+            <i class="fas fa-download"></i>
+            <span>Export Data</span>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.systemHealthCheck()">
+            <i class="fas fa-heartbeat"></i>
+            <span>System Health</span>
+        </div>
+        <div class="quick-action-item" onclick="adminProView.clearCache()">
+            <i class="fas fa-broom"></i>
+            <span>Clear Cache</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/admin-features.js"></script>
+    
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in and is admin
+            setTimeout(function() {
+                const loginRequired = document.getElementById('loginRequired');
+                const adminBody = document.querySelector('.admin-body');
+                
+                // Check stored user data
+                const userData = localStorage.getItem('burudani_user_data');
+                const token = localStorage.getItem('burudani_auth_token');
+                
+                if (userData && token) {
+                    const user = JSON.parse(userData);
+                    if (user.role === 'admin') {
+                        // User is admin - show dashboard
+                        loginRequired.style.display = 'none';
+                        adminBody.classList.remove('login-required');
+                        console.log('Admin authenticated:', user.name);
+                    } else {
+                        // User is logged in but not admin
+                        showLoginRequired();
+                    }
+                } else {
+                    // Not logged in
+                    showLoginRequired();
+                }
+            }, 500);
+        });
+        
+        function showLoginRequired() {
+            const loginRequired = document.getElementById('loginRequired');
+            const adminBody = document.querySelector('.admin-body');
+            if (loginRequired) {
+                loginRequired.style.display = 'flex';
+            }
+            if (adminBody) {
+                adminBody.classList.add('login-required');
+            }
+            // Hide main content
+            document.querySelector('.admin-sidebar').style.display = 'none';
+            document.querySelector('.admin-main').style.display = 'none';
+            document.querySelector('.sidebar-toggle').style.display = 'none';
+        }
+        
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.production
+.env.example
+
+# Configuration files with credentials
+config/connection.php
+config/database.php
+config/config.php
+
+# Dependency directories
+vendor/
+node_modules/
+composer.lock
+
+# Logs
+*.log
+logs/
+xampp/logs/
+api/storage/logs/
+
+# Caches
+cache/
+*.cache
+storage/framework/cache/
+
+# Uploads folder (user-uploaded content)
+/uploads/
+!uploads/.gitkeep  # Keep empty folder structure
+
+# Database files (NEVER commit databases!)
+*.sql
+*.sqlite
+*.db
+dump.sql
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.pid
+
+# Session files
+*session*
+
+# Backup files
+*.backup
+*.bak
+
+# ZIP files (your api.updated.zip and includes.zip)
+*.zip
+
+# Documentation files (optional - remove or modify as needed)
+FEATURES_COMBINED.md
+IMPLEMENTATION_COMPANY_UPLOADS.md
+IMPLEMENTATION_COMPLETE.md
+IMPLEMENTATION_NETFLIX_YOUTUBE.md
+IMPLEMENTATION_TODO.md
+PROJECT_PLAN.md
+TODO_*.md

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - BurudaniKiganjani</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="profile-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon">▶</span>
+                    <span class="logo-text">BurudaniKiganjani</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="browse.html" class="nav-link">Browse</a></li>
+                    <li><a href="my-list.html" class="nav-link">My List</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="search-container">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search content...">
+                        <button class="search-submit"><i class="fas fa-search"></i></button>
+                    </div>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-menu">
+                    <button class="user-avatar-btn">
+                        <img src="assets/images/default-avatar.png" alt="User" id="headerAvatar">
+                    </button>
+                    <div class="user-dropdown">
+                        <div class="user-dropdown-header">
+                            <img src="assets/images/default-avatar.png" alt="User" id="dropdownAvatar">
+                            <div class="user-info">
+                                <span id="dropdownName">User</span>
+                                <span id="dropdownEmail">user@example.com</span>
+                            </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="profile.html" class="dropdown-item active"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" onclick="auth.logout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                    </div>
+            </div>
+    </header>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-banner" id="profileBanner">
+            <div class="profile-banner-overlay"></div>
+            <button class="edit-banner-btn" title="Change banner">
+                <i class="fas fa-camera"></i>
+            </button>
+        </div>
+        <div class="profile-header-content">
+            <div class="profile-avatar-container">
+                <img src="assets/images/default-avatar.png" alt="Profile" id="profileAvatar" class="profile-avatar">
+                <button class="edit-avatar-btn" title="Change avatar">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">User Name</h1>
+                <p class="profile-handle" id="profileHandle">@username</p>
+                <div class="profile-meta">
+                    <span id="profileLocation"><i class="fas fa-map-marker-alt"></i></span>
+                    <span id="profileWebsite" class="profile-website"></span>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="subscriberCount">0</span>
+                        <span class="stat-label">Subscribers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="followingCount">0</span>
+                        <span class="stat-label">Following</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="totalViews">0</span>
+                        <span class="stat-label">Total Views</span>
+                    </div>
+                <button class="btn btn-primary" id="editProfileBtn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+            </div>
+    </div>
+
+    <!-- Profile Content -->
+    <main class="profile-main">
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="for-you">For You</button>
+            <button class="tab-btn" data-tab="playlists">Playlists</button>
+            <button class="tab-btn" data-tab="channels">Channels</button>
+            <button class="tab-btn" data-tab="history">History</button>
+            <button class="tab-btn" data-tab="liked">Liked</button>
+            <button class="tab-btn" data-tab="my-list">My List</button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="tab-panels">
+            <!-- For You Panel -->
+            <div class="tab-panel active" id="panel-for-you">
+                <div class="profile-bio-section">
+                    <h3>About</h3>
+                    <p class="profile-bio" id="profileBio">Welcome to my channel!</p>
+                    
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Joined <span id="profileJoined">January 2026</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-user-tag"></i>
+                            <span>Role: <span id="profileRole">USER</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-star"></i>
+                            <span>Plan: <span id="profilePlan">FREE</span>
+                        </div>
+                </div>
+
+            <!-- Playlists Panel -->
+            <div class="tab-panel" id="panel-playlists">
+                <div class="panel-header">
+                    <h2>My Playlists</h2>
+                    <button class="btn btn-primary" onclick="profile.createPlaylist()">
+                        <i class="fas fa-plus"></i> Create Playlist
+                    </button>
+                </div>
+                <div class="playlists-grid" id="playlistsGrid">
+                    <!-- Playlists will be loaded here -->
+                </div>
+
+            <!-- Channels Panel -->
+            <div class="tab-panel" id="panel-channels">
+                <div class="panel-header">
+                    <h2>Subscribed Channels</h2>
+                </div>
+                <div class="channels-list" id="channelsGrid">
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <h3>No channels yet</h3>
+                        <p>Channels you follow will appear here</p>
+                    </div>
+            </div>
+
+            <!-- History Panel -->
+            <div class="tab-panel" id="panel-history">
+                <div class="panel-header">
+                    <h2>Watch History</h2>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <h3>No watch history</h3>
+                        <p>Videos you watch will appear here</p>
+                    </div>
+            </div>
+
+            <!-- Liked Panel -->
+            <div class="tab-panel" id="panel-liked">
+                <div class="panel-header">
+                    <h2>Liked Videos</h2>
+                </div>
+                <div class="liked-grid" id="likedGrid">
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <h3>No liked videos</h3>
+                        <p>Videos you like will appear here</p>
+                    </div>
+            </div>
+
+            <!-- My List Panel -->
+            <div class="tab-panel" id="panel-my-list">
+                <div class="panel-header">
+                    <h2>My List</h2>
+                </div>
+                <div class="my-list-row" id="myListRow">
+                    <div class="empty-state">
+                        <i class="fas fa-bookmark"></i>
+                        <h3>No saved videos</h3>
+                        <p>Videos you save will appear here</p>
+                    </div>
+            </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal edit-profile-modal">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" id="closeEditModal"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="editProfileForm">
+                <div class="modal-body">
+                    <!-- Avatar Upload -->
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <div class="avatar-upload-preview">
+                            <img src="assets/images/default-avatar.png" id="editAvatarPreview" alt="Avatar">
+                            <label class="btn btn-secondary btn-sm">
+                                <i class="fas fa-camera"></i> Change Photo
+                                <input type="file" accept="image/*" hidden id="avatarFileInput">
+                            </label>
+                        </div>
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="editName">Display Name *</label>
+                        <input type="text" id="editName" placeholder="Your name" required>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="editHandle">Username</label>
+                        <input type="text" id="editHandle" placeholder="@username">
+                        <p class="form-hint">Letters, numbers, and underscores only</p>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="form-group">
+                        <label for="editBio">Bio</label>
+                        <textarea id="editBio" placeholder="Tell us about yourself..." rows="4"></textarea>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-group">
+                        <label for="editLocation">Location</label>
+                        <input type="text" id="editLocation" placeholder="City, Country">
+                    </div>
+
+                    <!-- Website -->
+                    <div class="form-group">
+                        <label for="editWebsite">Website</label>
+                        <input type="url" id="editWebsite" placeholder="https://yourwebsite.com">
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="editDob">Date of Birth</label>
+                        <input type="date" id="editDob">
+                    </div>
+
+                    <!-- Email (read-only) -->
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" disabled>
+                        <p class="form-hint">Email cannot be changed</p>
+                    </div>
+
+                    <!-- Subscription Plan -->
+                    <div class="form-group">
+                        <label for="editSubscription">Subscription Plan</label>
+                        <select id="editSubscription" disabled>
+                            <option value="free">Free</option>
+                            <option value="basic">Basic</option>
+                            <option value="premium">Premium</option>
+                            <option value="family">Family</option>
+                        </select>
+                        <p class="form-hint">Upgrade in Settings</p>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    <!-- Create Playlist Modal -->
+    <div class="modal-overlay" id="createPlaylistModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Create Playlist</h2>
+                <button class="modal-close" onclick="profile.closeCreatePlaylist()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="createPlaylistForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="playlistName">Playlist Name *</label>
+                        <input type="text" id="playlistName" placeholder="My Playlist" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="playlistDescription">Description</label>
+                        <textarea id="playlistDescription" placeholder="What's this playlist about?" rows="3"></textarea>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="profile.closeCreatePlaylist()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
+                </div>
+            </form>
+        </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/profile.js"></script>
+    <script src="assets/js/footer.js"></script>
+</body>
+</html>

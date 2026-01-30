@@ -1,0 +1,714 @@
+/* ================================
+   Watch Page Styles
+   ================================ */
+
+/* Video Section */
+.video-section {
+    position: relative;
+    width: 100%;
+    background: #000;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    aspect-ratio: 16/9;
+    position: relative;
+}
+
+.video-player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+.video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.placeholder-content {
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.placeholder-icon {
+    font-size: 5rem;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.placeholder-title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.placeholder-message {
+    color: var(--text-secondary);
+}
+
+/* Video Controls */
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 40px 24px 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.video-player:hover .video-controls,
+.video-controls.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.progress-container {
+    position: relative;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: height 0.2s ease;
+}
+
+.progress-bar:hover {
+    height: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: var(--text-primary);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+}
+
+.progress-hover {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    padding: 4px 8px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.progress-bar:hover .progress-hover {
+    opacity: 1;
+}
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls-left,
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.control-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.control-btn.active {
+    color: var(--primary-color);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-slider {
+    width: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+    accent-color: var(--primary-color);
+}
+
+.volume-control:hover .volume-slider,
+.volume-slider:focus {
+    width: 80px;
+    opacity: 1;
+}
+
+.time-display {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.quality-select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.quality-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Watch Content */
+.watch-content {
+    background: var(--background-dark);
+    padding: 32px var(--container-padding) 64px;
+}
+
+.watch-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+}
+
+/* Watch Main */
+.watch-main {
+    min-width: 0;
+}
+
+.watch-header {
+    margin-bottom: 24px;
+}
+
+.watch-title-section {
+    margin-bottom: 20px;
+}
+
+.watch-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.watch-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+
+.meta-item.match {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.meta-item.rating {
+    padding: 2px 6px;
+    background: var(--text-primary);
+    color: var(--background-dark);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+}
+
+.meta-item.quality {
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+}
+
+.watch-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-icon-lg {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+}
+
+/* Description */
+.watch-description {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.watch-description p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.description-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.meta-row {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9rem;
+}
+
+.meta-row .label {
+    color: var(--text-muted);
+    min-width: 80px;
+}
+
+.meta-row .value {
+    color: var(--text-secondary);
+}
+
+/* Episodes Section */
+.episodes-section {
+    margin-bottom: 48px;
+}
+
+.episodes-section .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.season-select {
+    background: var(--background-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+}
+
+.episodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-episode {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: var(--background-card);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.card-episode:hover {
+    background: var(--background-card-hover);
+    transform: translateX(4px);
+}
+
+.card-episode-number {
+    flex: 0 0 48px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--background-input);
+    border-radius: var(--radius-md);
+}
+
+.card-episode:hover .card-episode-number {
+    color: var(--primary-color);
+}
+
+.card-episode-image {
+    flex: 0 0 160px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.card-episode-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-episode-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-episode-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.card-episode-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-episode-duration {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Reviews Section */
+.reviews-section {
+    margin-bottom: 48px;
+}
+
+.rating-overview {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 24px;
+    background: var(--background-card);
+    border-radius: var(--radius-lg);
+    margin-bottom: 32px;
+}
+
+.rating-score {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rating-score .score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+.rating-stars {
+    display: flex;
+    gap: 4px;
+    font-size: 1.25rem;
+    color: var(--text-muted);
+}
+
+.rating-stars .fas {
+    color: #ffc107;
+}
+
+.rating-count {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Comments Section */
+.comments-section {
+    padding-top: 32px;
+    border-top: 1px solid var(--border-color);
+}
+
+.comments-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.comment-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.comment-form .btn {
+    align-self: flex-end;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 16px;
+}
+
+.comment-avatar {
+    flex: 0 0 40px;
+}
+
+.comment-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.comment-author {
+    font-weight: 600;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.comment-text {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.comment-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.comment-action:hover {
+    color: var(--text-primary);
+}
+
+.empty-comments {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-muted);
+}
+
+/* Watch Sidebar */
+.watch-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.related-content {
+    padding: 20px;
+    background: var(--background-card);
+    border-radius: var(--radius-lg);
+}
+
+.sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.related-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.related-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: var(--background-input);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.related-item:hover {
+    background: var(--background-card-hover);
+}
+
+.related-thumbnail {
+    flex: 0 0 80px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.related-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.related-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.related-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .watch-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .watch-sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .watch-content {
+        padding: 24px var(--container-padding) 48px;
+    }
+    
+    .watch-title {
+        font-size: 1.5rem;
+    }
+    
+    .rating-overview {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .rating-score .score {
+        font-size: 2rem;
+    }
+    
+    .card-episode-image {
+        flex: 0 0 100px;
+    }
+    
+    .controls-left,
+    .controls-right {
+        gap: 8px;
+    }
+    
+    .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .time-display {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .watch-actions {
+        justify-content: center;
+    }
+    
+    .btn-icon-lg {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .card-episode {
+        padding: 12px;
+    }
+    
+    .card-episode-number {
+        flex: 0 0 36px;
+        font-size: 1rem;
+    }
+    
+    .card-episode-image {
+        flex: 0 0 80px;
+    }
+}
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - BurudaniKiganjani</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <!-- Background -->
+    <div class="auth-background">
+        <div class="auth-overlay"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="auth-header">
+        <div class="logo">
+            <a href="index.html">
+                <span class="logo-icon">▶</span>
+                <span class="logo-text">BurudaniKiganjani</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Verify Email Form -->
+    <main class="auth-content">
+        <div class="auth-card" style="max-width: 500px;">
+            <div class="auth-header-section" id="headerSection">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+
+            <div id="verifyContent">
+                <!-- Content will be loaded here -->
+            </div>
+
+            <div class="auth-footer" id="authFooter" style="display: none;">
+                <a href="login.html" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Go to Sign In
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="auth-footer-section">
+        <div class="footer-content">
+            <p>&copy; 2024 BurudaniKiganjani. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/components.js"></script>
+    
+    <script>
+        // Email Verification Page
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const userId = urlParams.get('user_id');
+            
+            const headerSection = document.getElementById('headerSection');
+            const verifyContent = document.getElementById('verifyContent');
+            const authFooter = document.getElementById('authFooter');
+            
+            // Show loading
+            headerSection.innerHTML = `
+                <div class="text-center">
+                    <div class="loading-spinner" style="margin: 20px auto;">
+                        <div class="spinner" style="width: 40px; height: 40px;"></div>
+                    </div>
+                    <p style="color: #b3b3b3;">Verifying your email...</p>
+                </div>
+            `;
+            
+            if (!token || !userId) {
+                showError('Invalid verification link. Please check your email and try again.');
+                return;
+            }
+            
+            try {
+                const result = await auth.verifyEmail(token, userId);
+                
+                if (result.success) {
+                    showSuccess();
+                } else {
+                    showError(result.message || 'Verification failed. The link may have expired.');
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                showError('An error occurred during verification. Please try again.');
+            }
+            
+            function showSuccess() {
+                headerSection.innerHTML = `
+                    <div class="text-center" style="color: #46d369;">
+                        <i class="fas fa-check-circle" style="font-size: 64px; margin-bottom: 20px;"></i>
+                        <h1 class="auth-title">Email Verified!</h1>
+                        <p class="auth-subtitle">Your email has been successfully verified. You can now enjoy all features of BurudaniKiganjani.</p>
+                    </div>
+                `;
+                
+                verifyContent.innerHTML = `
+                    <div style="text-align: center; padding: 20px 0;">
+                        <p style="color: #b3b3b3; margin-bottom: 30px;">Redirecting to home page in <span id="countdown">3</span> seconds...</p>
+                    </div>
+                `;
+                
+                authFooter.style.display = 'block';
+                
+                // Countdown and redirect
+                let count = 3;
+                const countdownEl = document.getElementById('countdown');
+                const interval = setInterval(() => {
+                    count--;
+                    if (countdownEl) countdownEl.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(interval);
+                        window.location.href = 'index.html';
+                    }
+                }, 1000);
+            }
+            
+            function showError(message) {
+                headerSection.innerHTML = `
+                    <div class="text-center" style="color: #e50914;">
+                        <i class="fas fa-times-circle" style="font-size: 64px; margin-bottom: 20px;"></i>
+                        <h1 class="auth-title">Verification Failed</h1>
+                        <p class="auth-subtitle">${message}</p>
+                    </div>
+                `;
+                
+                verifyContent.innerHTML = `
+                    <div style="text-align: center; padding: 20px 0;">
+                        <p style="color: #b3b3b3; margin-bottom: 20px;">Need help? Contact our support team.</p>
+                        <a href="index.html" class="btn btn-secondary">
+                            <i class="fas fa-home"></i>
+                            Go to Home
+                        </a>
+                    </div>
+                `;
+            }
+        });
+    </script>
+    <script src="assets/js/footer.js"></script>
+</body>
+</html>
+
